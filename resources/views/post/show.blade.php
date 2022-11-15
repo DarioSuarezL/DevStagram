@@ -23,6 +23,12 @@
             <div class="shadow bg-white p-5 mb-5">
 
                 @auth
+
+                @if (session('message'))
+                    <div class="bg-green-700 p-2 rounded-lg mb-6 text-white text-center font-bold">
+                        {{session('message')}}
+                    </div>
+                @endif
                 
                 <p class="text-xl font-bold text-center mb-4">Comment something</p>
 
@@ -43,6 +49,20 @@
                 </form>
 
                 @endauth
+
+                <div class="bg-white shadow my-5 max-h-96 overflow-y-scroll">
+                    @if ($post->comments->count())
+                        @foreach ($post->comments as $comment)
+                            <div class="p-5 border-gray-300 border-b">
+                                <a href="{{ route('post.index',$comment->user) }}" class="font-bold">{{ $comment->user->name }}</a>
+                                <p>{{ $comment->comment }}</p>
+                                <p class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</p>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="p-10 text-center">No comments yet</p>
+                    @endif
+                </div>
 
             </div>
         </div>

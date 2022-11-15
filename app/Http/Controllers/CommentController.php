@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
     
-    public function store(Request $request, )
+    public function store(Request $request, User $user, Post $post)
     {
         // dd('prueba superada');
 
@@ -17,8 +19,12 @@ class CommentController extends Controller
         ]);
 
         Comment::create([
-
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id,
+            'comment' => $request->comment
         ]);
+
+        return back()->with('message','Comment successful');
     }
 
 }
