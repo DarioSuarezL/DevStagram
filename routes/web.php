@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
@@ -50,3 +51,7 @@ Route::post('/logout',[LogoutController::class,'store'])->name('logout');
 
 //Rutas para imagenes
 Route::post('/image',[ImageController::class,'store'])->name('image.store');
+
+//Rutas para los Likes
+Route::post('/posts/{post}/likes',[LikeController::class,'store'])->name('post.like.store');
+Route::delete('/posts/{post}/likes',[LikeController::class,'destroy'])->name('post.like.destroy');
