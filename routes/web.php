@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
@@ -22,9 +23,7 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('/login', function () {
     return view('auth.login');
