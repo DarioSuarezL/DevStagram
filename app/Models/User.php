@@ -4,10 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -51,4 +51,25 @@ class User extends Authenticatable
     public function likes(){
         return $this->hasMany(Like::class);
     }
+
+    //seguidores desde punto de vista del seguido
+
+    public function followers(){
+        return $this->belongsToMany(User::class,'followers','user_id','follower_id');
+    }
+
+    public function isFollowedBy(User $user){ //devuelve true si el usuario del parámetro sigue al usuario del método
+        return $this->followers->contains($user->id);
+    }
+
+    //seguidores desde punto de vista del seguidor
+
+    public function followed(){
+        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+    }
+
+    public function isFollowing(User $user){
+        return $this->followed->contains($user->id);
+    }
+
 }

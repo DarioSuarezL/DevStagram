@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
@@ -60,4 +61,9 @@ Route::post('/image',[ImageController::class,'store'])->name('image.store');
 //Rutas para los Likes
 Route::post('/posts/{post}/likes',[LikeController::class,'store'])->name('post.like.store');
 Route::delete('/posts/{post}/likes',[LikeController::class,'destroy'])->name('post.like.destroy');
+
+//Rutas para los followers
+Route::post('/{user:username}/follow',[FollowerController::class,'store'])->name('user.follow');
+Route::delete('/{user:username}/unfollow',[FollowerController::class,'destroy'])->name('user.unfollow');
+
 

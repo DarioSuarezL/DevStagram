@@ -107,7 +107,7 @@
                     @if ($post->comments->count())
                         @foreach ($post->comments as $comment)
                             <div class="p-5 border-gray-300 border-b">
-                                <a href="{{ route('post.index',$comment->user) }}" class="font-bold">{{ $comment->user->name }}</a>
+                                <a href="{{ route('post.index',$comment->user) }}" class="font-bold">{{ $comment->user->username }}</a>
                                 <p>{{ $comment->comment }}</p>
                                 <p class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</p>
                             </div>

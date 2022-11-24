@@ -29,17 +29,40 @@
                 </div>
 
                 <p class="text-gray-800 text-sm mb-3 font-bold mt-5">
-                    0 <span class="font-normal">followers</span>
+                    {{$user->followers->count()}}
+                    <span class="font-normal">@choice('follower|followers',$user->followers->count())</span>
                 </p>
                 <p class="text-gray-800 text-sm mb-3 font-bold">
-                    0 <span class="font-normal">followed</span>
+                    {{$user->followed->count()}}
+                    <span class="font-normal">followed</span>
                 </p>
                 <p class="text-gray-800 text-sm mb-3 font-bold">
                     {{$user->posts->count()}}
                     <span class="font-normal">Posts</span>
                 </p>
+                @auth
+                    @if ($user->id !== auth()->user()->id)
+                        @if ($user->isFollowedBy(auth()->user()))
+                            <form action="{{route('user.unfollow',$user)}}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <input type="submit"
+                                        class="bg-red-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+                                        value="unfollow"
+                                        >
+                            </form>
+                        @else
+                            <form action="{{route('user.follow',$user)}}" method="POST">
+                                @csrf
+                                <input type="submit"
+                                class="bg-blue-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+                                value="follow"
+                                >
+                            </form>
+                        @endif
+                    @endif
+                @endauth
             </div>
-
         </div>
     </div>
 
